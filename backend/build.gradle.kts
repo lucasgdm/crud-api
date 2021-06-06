@@ -16,11 +16,19 @@ repositories {
 }
 
 dependencies {
+	implementation(platform("com.amazonaws:aws-java-sdk-bom:1.11.1034"))
+	implementation("com.amazonaws:aws-java-sdk-dynamodb")
+
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.data:spring-data-rest-webmvc")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.withType<KotlinCompile> {
