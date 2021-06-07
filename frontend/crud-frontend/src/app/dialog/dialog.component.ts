@@ -12,6 +12,10 @@ import { cpf } from 'cpf-cnpj-validator';
   styleUrls: ['./dialog.component.less']
 })
 export class DialogComponent implements OnInit {
+  creating = false;
+  updating = false;
+  deleting = false;
+
   form = new FormGroup({
     name: new FormControl("", [
       Validators.required,
@@ -94,8 +98,10 @@ export class DialogComponent implements OnInit {
   create() {
     const newPerson = this.getFormPerson()
 
+    this.creating = true;
     this.personService.createPerson(newPerson)
       .subscribe(_ => {
+        this.creating = false;
         this.dialogRef.close(true);
       })
   }
@@ -104,16 +110,20 @@ export class DialogComponent implements OnInit {
     const updatedPerson = this.getFormPerson()
     updatedPerson.id = this.personId
 
+    this.updating = true;
     this.personService.updatePerson(updatedPerson)
       .subscribe(_ => {
+        this.updating = false;
         this.dialogRef.close(true);
       })
   }
 
   delete() {
+    this.deleting = true
     this.personService.deletePerson(this.personId)
       .subscribe(_ => {
-        this.dialogRef.close(true);
+        this.deleting = false
+        this.dialogRef.close(true)
       })
   }
 }

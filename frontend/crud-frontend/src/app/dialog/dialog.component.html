@@ -1,7 +1,11 @@
 
 <div class="header-container">
   <h1>{{personId == null ? 'Cadastrar pessoa' : 'Atualizar pessoa'}}</h1>
-  <button *ngIf="personId != null" mat-raised-button color="warn" (click)="delete()">Excluir</button>
+  <button *ngIf="personId != null" mat-raised-button color="warn" (click)="delete()" [disabled]="deleting">
+    <div class="button-container">
+      <mat-icon>delete</mat-icon>Excluir
+    </div>
+  </button>
 </div>
 
 <form [formGroup]="form" class="full-width">
@@ -51,6 +55,12 @@
 </form>
 
 <div class="button-container">
-  <button mat-raised-button *ngIf="personId == null" color="primary" (click)="create()" [disabled]="form.status == 'INVALID'">Adicionar</button>
-  <button mat-raised-button *ngIf="personId != null" color="primary" (click)="update()" [disabled]="form.status == 'INVALID'">Atualizar</button>
+  <button mat-raised-button *ngIf="personId == null" color="primary" (click)="create()" [disabled]="form.status == 'INVALID' || creating">
+    Adicionar
+  </button>
+  <button mat-raised-button *ngIf="personId != null" color="primary" (click)="update()" [disabled]="form.status == 'INVALID' || updating">
+    <div class="button-container">
+      <mat-icon>save</mat-icon>Salvar
+    </div>
+  </button>
 </div>

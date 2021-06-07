@@ -1,7 +1,11 @@
 <div class="content" role="main">
   <h1 class="mat-h1">Crud API</h1>
 
-  <button mat-raised-button color="primary" (click)="create()"> Adicionar </button>
+  <button mat-raised-button color="primary" (click)="create()">
+    <div class="button-container">
+      <mat-icon>add</mat-icon>Adicionar
+    </div>
+  </button>
 
   <mat-card layout="row" layout-align="center center" style="min-height: 500px">
     <mat-table [dataSource]="persons">
