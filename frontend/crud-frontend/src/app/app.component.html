@@ -1,0 +1,39 @@
+<div class="content" role="main">
+  <h1 class="mat-h1">Crud API</h1>
+
+  <button mat-raised-button color="primary" (click)="create()"> Adicionar </button>
+
+  <mat-card layout="row" layout-align="center center" style="min-height: 500px">
+    <mat-table [dataSource]="persons">
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="taxpayerId">
+        <mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.taxpayerId}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> e-mail </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="birthday">
+        <mat-header-cell *matHeaderCellDef> Data de nascimento </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{formatDate(element.birthday)}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        (click)="clickedRow(row)"
+        [class.demo-row-is-clicked]="false"
+        *matRowDef="let row; columns: displayedColumns;"
+      ></mat-row>
+    </mat-table>
+  </mat-card>
+</div>
+
+<router-outlet></router-outlet>

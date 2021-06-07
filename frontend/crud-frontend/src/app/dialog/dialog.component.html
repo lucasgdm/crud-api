@@ -1,0 +1,56 @@
+
+<div class="header-container">
+  <h1>{{personId == null ? 'Cadastrar pessoa' : 'Atualizar pessoa'}}</h1>
+  <button *ngIf="personId != null" mat-raised-button color="warn" (click)="delete()">Excluir</button>
+</div>
+
+<form [formGroup]="form" class="full-width">
+  <mat-form-field class="full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="João" formControlName="name">
+  </mat-form-field>
+  <div *ngIf="hasError('name', 'required')" class="invalid">
+    Nome é obrigatório
+  </div>
+  <div *ngIf="hasError('name', 'minlength')" class="invalid">
+    Nome precisa ter 5 ou mais caracteres
+  </div>
+
+  <mat-form-field class="full-width">
+    <mat-label>E-mail</mat-label>
+    <input matInput type="email" placeholder="joao@gmail.com" formControlName="email">
+  </mat-form-field>
+  <div *ngIf="hasError('email', 'required')" class="invalid">
+    E-mail é obrigatório
+  </div>
+  <div *ngIf="hasError('email', 'email')" class="invalid">
+    E-mail inválido
+  </div>
+
+  <mat-form-field class="full-width">
+    <mat-label>CPF</mat-label>
+    <input matInput placeholder="123.456.789-09" formControlName="taxpayerId">
+  </mat-form-field>
+  <div *ngIf="hasError('taxpayerId', 'required')" class="invalid">
+    CPF é obrigatório
+  </div>
+  <div *ngIf="hasError('taxpayerId', 'cpf')" class="invalid">
+    CPF inválido
+  </div>
+
+  <mat-form-field class="full-width">
+    <mat-label>Data de nascimento</mat-label>
+    <input matInput placeholder="dd/mm/aaaa" formControlName="birthday">
+  </mat-form-field>
+  <div *ngIf="hasError('birthday', 'required')" class="invalid">
+    Data de nascimento é obrigatória
+  </div>
+  <div *ngIf="hasError('birthday', 'date')" class="invalid">
+    Data de nascimento inválida
+  </div>
+</form>
+
+<div class="button-container">
+  <button mat-raised-button *ngIf="personId == null" color="primary" (click)="create()" [disabled]="form.status == 'INVALID'">Adicionar</button>
+  <button mat-raised-button *ngIf="personId != null" color="primary" (click)="update()" [disabled]="form.status == 'INVALID'">Atualizar</button>
+</div>
