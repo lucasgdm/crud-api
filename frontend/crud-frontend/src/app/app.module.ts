@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NgxMaskModule } from 'ngx-mask'
+
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,6 +40,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDatepickerModule,
     MatIconModule,
     MatSnackBarModule,
+    NgxMaskModule.forRoot({validation: false}),
   ],
   providers: [],
   bootstrap: [AppComponent]

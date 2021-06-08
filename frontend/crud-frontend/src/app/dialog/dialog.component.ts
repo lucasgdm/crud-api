@@ -55,7 +55,7 @@ export class DialogComponent implements OnInit {
   dateValidator(control: AbstractControl): ValidationErrors | null {
     if (!control.value || (/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/.test(control.value))) {
       const momentDate = moment(control.value, 'DD/MM/YYYY')
-      if (momentDate.isValid() && momentDate.isBefore(moment()))
+      if (momentDate.isValid() && momentDate.isBefore(moment()) && momentDate.isAfter(moment().subtract(120, 'year')))
         return null;
     }
     return {date: true}
