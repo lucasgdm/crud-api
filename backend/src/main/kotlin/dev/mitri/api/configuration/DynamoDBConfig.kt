@@ -9,10 +9,12 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig
-import com.amazonaws.services.dynamodbv2.document.DynamoDB
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTableMapper
+import dev.mitri.api.model.db.Person
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import java.util.*
 
 
 @Configuration
@@ -35,6 +37,14 @@ class DynamoDBConfig {
     }
 
     @Bean
+    fun amazonDynamoDB(): AmazonDynamoDB? {
+        return AmazonDynamoDBClientBuilder
+            .standard()
+            .withCredentials(amazonAWSCredentialsProvider())
+            .withRegion(Regions.fromName(awsRegion)).build()
+    }
+
+    @Bean
     fun dynamoDBMapperConfig(): DynamoDBMapperConfig? {
         return DynamoDBMapperConfig.Builder()
             .withSaveBehavior(DynamoDBMapperConfig.SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES)
@@ -47,15 +57,7 @@ class DynamoDBConfig {
     }
 
     @Bean
-    fun amazonDynamoDB(): AmazonDynamoDB? {
-        return AmazonDynamoDBClientBuilder
-            .standard()
-            .withCredentials(amazonAWSCredentialsProvider())
-            .withRegion(Regions.fromName(awsRegion)).build()
-    }
-
-    @Bean
-    fun dynamoDB(client: AmazonDynamoDB): DynamoDB? {
-        return DynamoDB(client)
+    fun dynamoDBTableMapper(dynamoDBMapper: DynamoDBMapper): DynamoDBTableMapper<Person, UUID, Any> {
+        return dynamoDBMapper.newTableMapper(Person::class.java)
     }
 }

@@ -24,10 +24,14 @@ class PeopleService(
     }
 
     fun deleteById(id: UUID) {
-        return peopleRepository.deleteById(id)
+        val idFound = peopleRepository.deleteById(id)
+        if (!idFound)
+            throw ResourceNotFoundException()
     }
 
     fun update(person: Person) {
-        return peopleRepository.update(person)
+        val idFound = peopleRepository.update(person)
+        if (!idFound)
+            throw ResourceNotFoundException()
     }
 }

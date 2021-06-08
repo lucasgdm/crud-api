@@ -7,6 +7,7 @@ import java.util.*
 import java.util.stream.Stream
 
 @RestController
+@CrossOrigin(origins = ["http://localhost:4200"], maxAge = 3600)
 class ApiController(
     private val peopleService: PeopleService
 ) {
