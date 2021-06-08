@@ -2,6 +2,8 @@ package dev.mitri.api.controller
 
 import dev.mitri.api.model.db.Person
 import dev.mitri.api.service.PeopleService
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import java.util.stream.Stream
@@ -18,8 +20,9 @@ class ApiController(
     }
 
     @PostMapping("/people")
-    fun insert(@RequestBody person: Person): Person {
-        return peopleService.insert(person)
+    fun insert(@RequestBody person: Person): ResponseEntity<Person> {
+        peopleService.insert(person)
+        return ResponseEntity<Person>(person, HttpStatus.CREATED)
     }
 
     @GetMapping("/people")
