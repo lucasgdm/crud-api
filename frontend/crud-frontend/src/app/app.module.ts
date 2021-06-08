@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input'
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker'; 
 import { MatIconModule } from '@angular/material/icon'; 
+import { MatSnackBarModule } from '@angular/material/snack-bar'; 
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatIconModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

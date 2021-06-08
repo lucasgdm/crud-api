@@ -4,6 +4,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { Person } from './person/person.model';
 import { PersonService } from './person/person.service';
 import * as moment from 'moment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent {
   constructor(
     private personService: PersonService,
     public dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit() {
@@ -36,7 +38,10 @@ export class AppComponent {
   getPeople() {
     this.personService
       .getPeople()
-      .subscribe(persons => this.persons = persons)
+      .subscribe(
+        persons => this.persons = persons,
+        _ => this.snackBar.open("🤒 Houve um erro ao carregar os dados", "Ok")
+      )
   }
 
   create() {

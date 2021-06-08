@@ -18,7 +18,6 @@ export class PersonService {
     return this.http.get<Person[]>(this.apiUrl)
       .pipe(
         tap(_ => console.log('fetched people')),
-        catchError(this.handleError<Person[]>('getPeople', []))
       )
   }
 
@@ -28,7 +27,6 @@ export class PersonService {
     return this.http.get<Person>(url)
       .pipe(
         tap(_ => console.log(`fetched person with id ${id}`)),
-        catchError(this.handleError<Person>('getPeople', undefined))
       )
   }
 
@@ -38,7 +36,6 @@ export class PersonService {
     return this.http.delete<Person>(url)
       .pipe(
         tap(_ => console.log(`deleted person with id ${id}`)),
-        catchError(this.handleError<Person>('deletePerson'))
       )
   }
 
@@ -48,7 +45,6 @@ export class PersonService {
     return this.http.patch(url, person)
       .pipe(
         tap(_ => console.log(`updated person with id ${person.id}`)),
-        catchError(this.handleError<any>('updatePerson'))
       );
   }
 
@@ -56,17 +52,7 @@ export class PersonService {
     return this.http.post(this.apiUrl, person)
       .pipe(
         tap(_ => console.log(`created person`)),
-        catchError(this.handleError<any>('createPerson'))
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error)
-
-      // TODO show error notification card
-
-      return of(result as T)
-    }
-  }
 }

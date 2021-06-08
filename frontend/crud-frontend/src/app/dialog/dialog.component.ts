@@ -5,6 +5,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
 import { PersonService } from '../person/person.service';
 import * as moment from 'moment';
 import { cpf } from 'cpf-cnpj-validator'; 
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dialog',
@@ -40,6 +41,7 @@ export class DialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public personId: string,
     private personService: PersonService,
+    private snackBar: MatSnackBar,
   ) {
   }
 
@@ -110,10 +112,15 @@ export class DialogComponent implements OnInit {
 
     this.creating = true;
     this.personService.createPerson(newPerson)
-      .subscribe(_ => {
-        this.creating = false;
-        this.dialogRef.close(true);
-      })
+      .subscribe(
+        _ => {
+          this.creating = false;
+          this.dialogRef.close(true);
+        },
+        _ => {
+          this.creating = false;
+          this.snackBar.open("🤒 Houve um erro ao adicinar dados", "Ok")
+        })
   }
 
   update() {
@@ -122,18 +129,29 @@ export class DialogComponent implements OnInit {
 
     this.updating = true;
     this.personService.updatePerson(updatedPerson)
-      .subscribe(_ => {
-        this.updating = false;
-        this.dialogRef.close(true);
-      })
+      .subscribe(
+        _ => {
+          this.updating = false;
+          this.dialogRef.close(true);
+        },
+        _ => {
+          this.updating = false;
+          this.snackBar.open("🤒 Houve um erro ao salvar os dados", "Ok")
+        }
+    )
   }
 
   delete() {
     this.deleting = true
     this.personService.deletePerson(this.personId)
-      .subscribe(_ => {
-        this.deleting = false
-        this.dialogRef.close(true)
-      })
+      .subscribe(
+        _ => {
+          this.deleting = false
+          this.dialogRef.close(true)
+        },
+        _ => {
+          this.deleting = false
+          this.snackBar.open("🤒 Houve um erro ao excluir os dados", "Ok")
+        })
   }
 }
