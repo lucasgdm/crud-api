@@ -1,7 +1,7 @@
-package dev.mitri.api.service
+package dev.mitri.crudapi.service
 
-import dev.mitri.api.model.db.Person
-import dev.mitri.api.repository.PeopleRepository
+import dev.mitri.crudapi.model.Person
+import dev.mitri.crudapi.repository.PeopleRepository
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.stereotype.Service
 import java.util.*

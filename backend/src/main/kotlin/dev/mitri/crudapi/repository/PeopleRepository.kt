@@ -1,9 +1,9 @@
-package dev.mitri.api.repository
+package dev.mitri.crudapi.repository
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTableMapper
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException
-import dev.mitri.api.model.db.Person
+import dev.mitri.crudapi.model.Person
 import org.springframework.stereotype.Repository
 import java.util.*
 import java.util.stream.Stream

@@ -1,4 +1,4 @@
-package dev.mitri.api
+package dev.mitri.crudapi
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

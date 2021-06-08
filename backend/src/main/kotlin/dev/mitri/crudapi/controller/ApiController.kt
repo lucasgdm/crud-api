@@ -1,7 +1,7 @@
-package dev.mitri.api.controller
+package dev.mitri.crudapi.controller
 
-import dev.mitri.api.model.db.Person
-import dev.mitri.api.service.PeopleService
+import dev.mitri.crudapi.model.Person
+import dev.mitri.crudapi.service.PeopleService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

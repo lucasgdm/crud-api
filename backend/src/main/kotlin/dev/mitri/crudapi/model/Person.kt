@@ -1,4 +1,4 @@
-package dev.mitri.api.model.db
+package dev.mitri.crudapi.model
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable
