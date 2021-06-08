@@ -17,7 +17,10 @@
     Nome é obrigatório
   </div>
   <div *ngIf="hasError('name', 'minlength')" class="invalid">
-    Nome precisa ter 5 ou mais caracteres
+    Nome precisa ter 3 ou mais caracteres
+  </div>
+  <div *ngIf="hasError('name', 'name')" class="invalid">
+    Nome possui caracteres inválidos
   </div>
 
   <mat-form-field class="full-width">

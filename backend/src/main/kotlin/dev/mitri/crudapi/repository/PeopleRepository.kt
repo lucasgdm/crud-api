@@ -17,14 +17,16 @@ class PeopleRepository (
     fun insert(person: Person): Person {
         person.id = UUID.randomUUID()
         person.createdAt = Date()
+        person.updatedAt = null
         dynamoDBTableMapper.save(person)
         return person
     }
 
-    fun update(updatedPerson: Person): Boolean {
-        updatedPerson.updatedAt = Date()
+    fun update(person: Person): Boolean {
+        person.createdAt = null
+        person.updatedAt = Date()
         try {
-            dynamoDBTableMapper.saveIfExists(updatedPerson)
+            dynamoDBTableMapper.saveIfExists(person)
         } catch (e: ConditionalCheckFailedException) {
             return false
         }

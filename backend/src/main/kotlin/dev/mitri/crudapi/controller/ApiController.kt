@@ -1,12 +1,15 @@
 package dev.mitri.crudapi.controller
 
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
 import dev.mitri.crudapi.model.Person
 import dev.mitri.crudapi.service.PeopleService
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import java.util.stream.Stream
+import javax.validation.Valid
+
 
 @RestController
 @CrossOrigin(origins = ["http://localhost:4200"], maxAge = 3600)
@@ -20,9 +23,10 @@ class ApiController(
     }
 
     @PostMapping("/people")
-    fun insert(@RequestBody person: Person): ResponseEntity<Person> {
+    @ResponseStatus(HttpStatus.CREATED)
+    fun insert(@Valid @RequestBody person: Person): Person {
         peopleService.insert(person)
-        return ResponseEntity<Person>(person, HttpStatus.CREATED)
+        return person
     }
 
     @GetMapping("/people")
@@ -44,5 +48,20 @@ class ApiController(
     @DeleteMapping("/people/{id}")
     fun delete(@PathVariable id: UUID) {
         return peopleService.deleteById(id)
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun badRequestException(exception: MethodArgumentNotValidException): Any {
+        val errorMessages = exception.bindingResult.allErrors
+            .stream()
+            .map { error -> error.defaultMessage }
+        return mapOf("errors" to errorMessages)
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UnrecognizedPropertyException::class)
+    fun badRequestException(exception: UnrecognizedPropertyException): Any {
+        return mapOf("errors" to (listOf("Unknown field ${exception.propertyName}")))
     }
 }

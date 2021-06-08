@@ -19,7 +19,8 @@ export class DialogComponent implements OnInit {
   form = new FormGroup({
     name: new FormControl("", [
       Validators.required,
-      Validators.minLength(5),
+      Validators.minLength(3),
+      this.nameValidator,
     ]),
     email: new FormControl("", [
       Validators.required,
@@ -50,11 +51,20 @@ export class DialogComponent implements OnInit {
   }
 
   dateValidator(control: AbstractControl): ValidationErrors | null {
-    if (!control.value || (/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/g.test(control.value) && moment(control.value, 'DD/MM/YYYY').isValid()))
-      return null;
+    if (!control.value || (/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/.test(control.value))) {
+      const momentDate = moment(control.value, 'DD/MM/YYYY')
+      if (momentDate.isValid() && momentDate.isBefore(moment()))
+        return null;
+    }
+    return {date: true}
+  }
+
+  nameValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value || /^[a-zA-Z ]*$/.test(control.value))
+      return null
     else
-      return {date: true}
-  };
+      return {name: true}
+  }
 
   hasError(field: string, error: string) {
     return this.form.get(field)?.errors
