@@ -39,4 +39,4 @@ The frontend is an Angular 12 app built with Material Design components
 
 ### Running
 
-1. ng serve
+1. `ng serve`
