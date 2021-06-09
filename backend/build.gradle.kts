@@ -28,6 +28,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
+	implementation("org.apache.commons:commons-lang3")
+
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
