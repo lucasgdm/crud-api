@@ -2,7 +2,6 @@ package dev.mitri.crudapi.model
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedJson
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.util.*
@@ -23,12 +22,11 @@ class Person {
     var email: String? = null
     @Pattern(regexp = "^[0-9]{11}$", message = "taxpayerId must have 11 digits")
     var taxpayerId: String? = null
-    @DynamoDBTypeConvertedJson
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Past(message = "birthday must be in the past")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     var birthday: Date? = null
-    @DynamoDBTypeConvertedJson
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     var createdAt: Date? = null
-    @DynamoDBTypeConvertedJson
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     var updatedAt: Date? = null
 }
