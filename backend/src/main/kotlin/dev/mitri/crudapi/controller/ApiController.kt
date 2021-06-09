@@ -12,7 +12,7 @@ import javax.validation.Valid
 
 
 @RestController
-@CrossOrigin(origins = ["http://localhost:4200"], maxAge = 3600)
+@CrossOrigin(origins = ["http://localhost:4200", "http://crudapi.s3-website-us-east-1.amazonaws.com"], maxAge = 3600)
 class ApiController(
     private val peopleService: PeopleService
 ) {

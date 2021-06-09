@@ -8,21 +8,21 @@ import { environment } from './../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class PersonService {
-  apiUrl = environment.apiUrl
+  baseUrl = `${environment.apiUrl}/people`
 
   constructor(
     private http: HttpClient,
   ) { }
 
   getPeople(): Observable<Person[]> {
-    return this.http.get<Person[]>(this.apiUrl)
+    return this.http.get<Person[]>(this.baseUrl)
       .pipe(
         tap(_ => console.log('fetched people')),
       )
   }
 
   getPerson(id: string): Observable<Person> {
-    const url = `${this.apiUrl}/${id}`
+    const url = `${this.baseUrl}/${id}`
 
     return this.http.get<Person>(url)
       .pipe(
@@ -31,7 +31,7 @@ export class PersonService {
   }
 
   deletePerson(id: string): Observable<Person> {
-    const url = `${this.apiUrl}/${id}`
+    const url = `${this.baseUrl}/${id}`
 
     return this.http.delete<Person>(url)
       .pipe(
@@ -40,7 +40,7 @@ export class PersonService {
   }
 
   updatePerson(person: Person): Observable<any> {
-    const url = `${this.apiUrl}/${person.id}`
+    const url = `${this.baseUrl}/${person.id}`
 
     return this.http.patch(url, person)
       .pipe(
@@ -49,7 +49,7 @@ export class PersonService {
   }
 
   createPerson(person: Person): Observable<any> {
-    return this.http.post(this.apiUrl, person)
+    return this.http.post(this.baseUrl, person)
       .pipe(
         tap(_ => console.log(`created person`)),
       );
