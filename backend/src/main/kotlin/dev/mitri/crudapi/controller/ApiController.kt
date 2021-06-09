@@ -40,7 +40,7 @@ class ApiController(
     }
 
     @PatchMapping("/people/{id}")
-    fun update(@PathVariable id: UUID, @RequestBody person: Person) {
+    fun update(@PathVariable id: UUID, @Valid @RequestBody person: Person) {
         person.id = id
         peopleService.update(person)
     }
