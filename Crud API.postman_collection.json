@@ -6,6 +6,24 @@
 	},
 	"item": [
 		{
+			"name": "Get all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/people",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"people"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get by id",
 			"request": {
 				"method": "GET",
