@@ -1,6 +1,8 @@
 package dev.mitri.crudapi.controller
 
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException
+import dev.mitri.crudapi.exception.BadRequestException
+import dev.mitri.crudapi.model.BadRequestResponse
 import dev.mitri.crudapi.model.Person
 import dev.mitri.crudapi.service.PeopleService
 import org.springframework.http.HttpStatus
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 import java.util.stream.Stream
 import javax.validation.Valid
+import kotlin.streams.toList
 
 
 @RestController
@@ -25,6 +28,8 @@ class ApiController(
     @PostMapping("/people")
     @ResponseStatus(HttpStatus.CREATED)
     fun insert(@Valid @RequestBody person: Person): Person {
+        if (person.email == null || person.name == null || person.birthday == null || person.taxpayerId == null)
+            throw BadRequestException(listOf("All fields are required"))
         peopleService.insert(person)
         return person
     }
@@ -50,18 +55,29 @@ class ApiController(
         return peopleService.deleteById(id)
     }
 
+    /**
+     * Exception handlers
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun badRequestException(exception: MethodArgumentNotValidException): Any {
+    fun handleArgumentNotValid(exception: MethodArgumentNotValidException): BadRequestResponse {
         val errorMessages = exception.bindingResult.allErrors
             .stream()
             .map { error -> error.defaultMessage }
-        return mapOf("errors" to errorMessages)
+            .filter { msg -> msg != null }
+            .toList()
+        return BadRequestResponse(errorMessages as List<String>)
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UnrecognizedPropertyException::class)
-    fun badRequestException(exception: UnrecognizedPropertyException): Any {
-        return mapOf("errors" to (listOf("Unknown field ${exception.propertyName}")))
+    fun handleUnrecognizedProperty(exception: UnrecognizedPropertyException): BadRequestResponse {
+        return BadRequestResponse(listOf("Unknown field ${exception.propertyName}"))
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BadRequestException::class)
+    fun handleBadRequest(exception: BadRequestException): BadRequestResponse {
+        return BadRequestResponse(exception.getErrors())
     }
 }
